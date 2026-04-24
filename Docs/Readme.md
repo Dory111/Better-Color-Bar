@@ -98,7 +98,7 @@ Custom_Color_Bar(colors      = viridis::cividis(n = n_colors),
 for categorical variables. These values are based on matrix indexing.
 Therefore, if you set a label to be at a non integer value the first
 digit will be what is represented. For example a value of between 2-2.99
-it will cause that label to appear at the second color division. Because
+will cause that label to appear at the second color division. Because
 this, along with the categorical example above is just done with the
 rect() function you can place as many color bars as you want. <br/>
 <br/>
