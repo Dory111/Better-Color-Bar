@@ -34,6 +34,15 @@ I wrote this color bar function because I was tired of the horrible ones that th
 <b><font size = "3">colors</font></b>: *vector*, series of colors to appear on the color bar.
 <br/>
 <br/>
+<b><font size = "3">bar_box</font></b>: *boolean*, default *FALSE*. Defines whether to draw a border around the color bar.
+<br/>
+<br/>
+<b><font size = "3">bar_box_col</font></b>: *char*, default *'black'*. Defines what color to draw the bar box in.
+<br/>
+<br/>
+<b><font size = "3">colors</font></b>: *vector*, series of colors to appear on the color bar.
+<br/>
+<br/>
 <b><font size = "3">xleft</font></b>: *numeric*, default to *par('usr')[1]*. The left hand coordinate of the color bar. Coordinates are in plot values and not paper values (0,1).  
 <br/>
 <b><font size = "3">ybot</font></b>: *numeric*, default to *par('usr')[3]*. The bottom coordinate of the color bar. Coordinates are in plot values and not paper values (0,1).
@@ -57,10 +66,19 @@ I wrote this color bar function because I was tired of the horrible ones that th
 <b><font size = "3">labels_text</font></b>: *char vector*, default *NULL*. The labels to be placed at *labels_at*. Must be the same length as *labels_at*.
 <br/>
 <br/>
+<b><font size = "3">labels_side</font></b>: *char*, default *'right'*. Accepts *'left'* or *'right'*. Defines whether in a vertical bar to draw labels to the left or right of the bar. In a horizontal bar *'right'* draws labels on the bottom and *'left'* draws labels on the top.
+<br/>
+<br/>
+<b><font size = "3">labels_srt</font></b>: *numeric*, default 0. Accepts range (0,360). Defines what orientation to draw bar labels in. 0 is equivalent to regular vertical text.
+<br/>
+<br/>
 <b><font size = "3">xpd</font></b>: *boolean*, default *TRUE*. Whether the color bar can exceed the coordinates of the plot region.
 <br/>
 <br/>
 <b><font size = "3">middle</font></b>: *boolean*, default *FALSE*. Whether labels appear in the middle of their color (for categorical variables). *FALSE* means they appear at the bottom of the value (unless the final value).
+<br/>
+<br/>
+<b><font size = "3">horizontal</font></b>: *boolean*, default *FALSE*. Defines whether to draw bar in a horizontal orientation. Default argument of *FALSE* means bar is drawn vertically.
 <br/>
 
 # Function Usage Examples
@@ -109,7 +127,10 @@ Custom_Color_Bar(colors      = viridis::cividis(n = n_colors),
                  labels_text = c('Bad','Good','Great')) # use any arbitrary text
 ```
 
-
+<br/>
+<br/>
+<br/>
+<br/>
 <font size = "3">This shows how to place labels at the middle of colors for categorical variables. These values are based on matrix indexing. Therefore, if you set a label to be at a non integer value the first digit will be what is represented. For example a value of between 2-2.99 will cause that label to appear at the second color division. Because this, along with the categorical example above is just done with the rect() function you can place as many color bars as you want.
 <br/>
 <br/>
@@ -161,8 +182,22 @@ Custom_Color_Bar(colors      = viridis::cividis(n = n_colors),
                  middle      = FALSE, # do not place at middle
                  line_length = 8, # adjust line length to demonstrate
                  labels_at   = c(0,n_colors/2,n_colors),
-                 labels_text = c(0,
-                                 2,4))
+                 labels_text = c(0,2,4))
+
+Custom_Color_Bar(colors      = viridis::viridis(n = n_colors),
+                 xleft       = 0,
+                 ybot        = 22,
+                 xright      = 25,
+                 ytop        = 25,
+                 labels_TF   = TRUE,
+                 horizontal  = TRUE,
+                 middle      = FALSE, # do not place at middle
+                 line_length = 1, # adjust line length to demonstrate
+                 labels_at   = c(0,n_colors/2,n_colors),
+                 labels_text = c(0,2,4),
+                 labels_side = 'left',
+                 bar_box     = TRUE,
+                 bar_box_col = 'red')
 ```
 
 
