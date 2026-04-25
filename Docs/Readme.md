@@ -50,6 +50,14 @@ bar. In a horizontal bar *‘right’* draws labels on the bottom and
 <b><font size = "3">labels_srt</font></b>: *numeric*, default 0. Accepts
 range (0,360). Defines what orientation to draw bar labels in. 0 is
 equivalent to regular vertical text. <br/> <br/>
+<b><font size = "3">labels_xjust</font></b>: *numeric* range *(0,1)*,
+default 0. Defines how to justify text in the case of a horizontal bar.
+0 is equivalent to right aligning, 1 is equivalent to left aligning, 0.5
+is equivalent to center aligning. <br/> <br/>
+<b><font size = "3">labels_yjust</font></b>: *numeric* range *(0,1)*,
+default 0. Defines how to justify text in the case of a horizontal bar.
+0 is equivalent to top aligning, 1 is equivalent to bottom aligning, 0.5
+is equivalent to center aligning. <br/>
 <b><font size = "3">xpd</font></b>: *boolean*, default *TRUE*. Whether
 the color bar can exceed the coordinates of the plot region. <br/> <br/>
 <b><font size = "3">middle</font></b>: *boolean*, default *FALSE*.
@@ -148,6 +156,7 @@ box(col = 'white')
 
 
 #-------------------------------------------------------------------------------
+# add increasing complexity
 n_colors <- 4
 Custom_Color_Bar(colors      = viridis::cividis(n = 1000),
                  xleft       = 0,
@@ -167,20 +176,22 @@ Custom_Color_Bar(colors      = viridis::cividis(n = n_colors),
                  labels_at   = c(0,n_colors/2,n_colors),
                  labels_text = c(0,2,4))
 
-Custom_Color_Bar(colors      = viridis::viridis(n = n_colors),
-                 xleft       = 0,
-                 ybot        = 22,
-                 xright      = 25,
-                 ytop        = 25,
-                 labels_TF   = TRUE,
-                 horizontal  = TRUE,
-                 middle      = FALSE, # do not place at middle
-                 line_length = 1, # adjust line length to demonstrate
-                 labels_at   = c(0,n_colors/2,n_colors),
-                 labels_text = c(0,2,4),
-                 labels_side = 'left',
-                 bar_box     = TRUE,
-                 bar_box_col = 'red')
+Custom_Color_Bar(colors       = viridis::viridis(n = n_colors),
+                 xleft        = 0,
+                 ybot         = 22,
+                 xright       = 25,
+                 ytop         = 25,
+                 labels_TF    = TRUE,
+                 horizontal   = TRUE,
+                 middle       = FALSE, # do not place at middle
+                 line_length  = 1, # adjust line length to demonstrate
+                 labels_at    = c(0,n_colors/2,n_colors),
+                 labels_text  = c('test','test','test'),
+                 labels_srt   = 45,
+                 labels_yjust = 0,
+                 labels_side  = 'left',
+                 bar_box      = TRUE,
+                 bar_box_col  = 'red')
 ```
 
 ![](Readme_files/figure-gfm/usageBottom-1.png)<!-- -->
