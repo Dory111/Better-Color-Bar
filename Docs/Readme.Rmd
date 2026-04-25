@@ -77,6 +77,7 @@ I wrote this color bar function because I was tired of the horrible ones that th
 <br/>
 <b><font size = "3">labels_yjust</font></b>: *numeric* range *(0,1)*, default 0. Defines how to justify text in the case of a horizontal bar. 0 is equivalent to top aligning, 1 is equivalent to bottom aligning, 0.5 is equivalent to center aligning.
 <br/>
+<br/>
 <b><font size = "3">xpd</font></b>: *boolean*, default *TRUE*. Whether the color bar can exceed the coordinates of the plot region.
 <br/>
 <br/>
