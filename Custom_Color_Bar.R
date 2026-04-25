@@ -1,4 +1,6 @@
 Custom_Color_Bar <- function(colors,
+                             bar_box     = FALSE,
+                             bar_box_col = 'black',
                              xleft       = par('usr')[1],
                              xright      = par('usr')[1] * 0.2,
                              ybot        = par('usr')[3],
@@ -8,6 +10,7 @@ Custom_Color_Bar <- function(colors,
                              labels_at   = NULL,
                              labels_text = NULL,
                              labels_side = 'right',
+                             labels_srt  = 0,
                              xpd         = TRUE,
                              middle      = FALSE,
                              horizontal  = FALSE)
@@ -70,6 +73,8 @@ Custom_Color_Bar <- function(colors,
         if(labels_TF == TRUE){
           lines(x = c(xleft, xright),
                 y = c(color_mat$ybottom[j],color_mat$ybottom[j]))
+          lines(x = c(xleft, xright),
+                y = c(tail(color_mat$ytop,1),tail(color_mat$ytop,1)))
         }
       } else {
         rect(color_mat$xleft[j],
@@ -153,7 +158,7 @@ Custom_Color_Bar <- function(colors,
           # which side are the labels on
           if(labels_side == 'right'){
             lines(x   = c(xright, xright + line_length),
-                  y   = c(y,y),
+                  y   = c(y, y),
                   xpd = xpd)
             
             text(x      = xright + line_length,
@@ -161,12 +166,13 @@ Custom_Color_Bar <- function(colors,
                  pos    = 4,
                  labels = labels_text[j],
                  cex    = 1.4,
-                 xpd    = xpd)
+                 xpd    = xpd,
+                 srt    = labels_srt)
           }
           
           if(labels_side == 'left'){
             lines(x   = c(xleft, xleft - line_length),
-                  y   = c(y,y),
+                  y   = c(y, y),
                   xpd = xpd)
             
             text(x      = xleft - line_length,
@@ -174,13 +180,26 @@ Custom_Color_Bar <- function(colors,
                  pos    = 2,
                  labels = labels_text[j],
                  cex    = 1.4,
-                 xpd    = xpd)
+                 xpd    = xpd,
+                 srt    = labels_srt)
           }
           #-------------------------------------------------------------------------------
         }
         #-------------------------------------------------------------------------------
       }
       #-------------------------------------------------------------------------------
+    }
+    #-------------------------------------------------------------------------------
+    
+    #-------------------------------------------------------------------------------
+    # draw box around the bar or not (by drawing rectangle of empty color)
+    if(bar_box == TRUE){
+      rect(xleft    = xleft,
+           ybottom  = ybot,
+           xright   = xright,
+           ytop     = ytop,
+           col      = NA,
+           border   = bar_box_col)
     }
     #-------------------------------------------------------------------------------
   }
@@ -191,12 +210,212 @@ Custom_Color_Bar <- function(colors,
   
   
   
+  
+  #-------------------------------------------------------------------------------
+  # if user wants to draw the bar in a horizontal position
+  Horizontal_Bar <- function(){
+    #-------------------------------------------------------------------------------
+    # create matrix of the coordinates for the rectangles that constitute the color bar
+    color_mat           <- matrix(nrow = length(colors),
+                                  ncol = 6)
+    color_mat           <- as.data.frame(color_mat)
+    colnames(color_mat) <- c('xleft','ybottom','xright','ytop','value','color')
+    color_mat$ytop      <- rep(ytop,nrow(color_mat))
+    color_mat$ybottom   <- rep(ybot,nrow(color_mat))
+    #-------------------------------------------------------------------------------
+    
+    #-------------------------------------------------------------------------------
+    # as the bars are horizontal the ybottom and ytop need to be incremented
+    # while the xleft and xright are constant
+    x_seq             <- seq(from = xleft, to = xright, length.out = length(colors)+1)
+    color_mat$xleft   <- x_seq[1:(length(x_seq) - 1)]
+    color_mat$xright  <- x_seq[2:(length(x_seq))]
+    #-------------------------------------------------------------------------------
+    
+    #-------------------------------------------------------------------------------
+    color_mat$value <- seq(from = -1, to = 1, length.out = length(colors))
+    color_mat$color <- colors
+    #-------------------------------------------------------------------------------
+    
+    
+    # ==============================================================================
+    # DRAW BAR
+    # ==============================================================================
+    
+    #-------------------------------------------------------------------------------
+    # draw the rectangles of the color bar
+    for(j in 1:nrow(color_mat)){
+      #-------------------------------------------------------------------------------
+      # compensates that the first label in the bar might be drawn below where the
+      # inner portion of the rectangle is by setting the first border of the color bar
+      # to the first color while the other rectangles that make up the bar have their border
+      # color set to NA
+      if(j == 1){
+        rect(color_mat$xleft[j],
+             color_mat$ybottom[j],
+             color_mat$xright[j],
+             color_mat$ytop[j],
+             col = color_mat$color[j],
+             border = NA)
+        if(labels_TF == TRUE){
+          lines(x = c(xleft, xleft),
+                y = c(color_mat$ybottom[j],color_mat$ytop[j]))
+          lines(x = c(xright, xright),
+                y = c(tail(color_mat$ybottom,1),tail(color_mat$ytop,1)))
+        }
+      } else {
+        rect(color_mat$xleft[j],
+             color_mat$ybottom[j],
+             color_mat$xright[j],
+             color_mat$ytop[j],
+             col = color_mat$color[j],
+             border = NA)
+      }
+      #-------------------------------------------------------------------------------
+    }
+    #-------------------------------------------------------------------------------
+    
+    
+    
+    
+    
+    
+    # ==============================================================================
+    # DRAW LABELS
+    # ==============================================================================
+    
+    #-------------------------------------------------------------------------------
+    # create extra row for the last label to be drawn with
+    # compensates for the fact that in any color bar there will be a different
+    # number of colors and breaks necessarily
+    new_row <- c(tail(color_mat$xright,1),
+                 ybot,
+                 tail(color_mat$xright,1),
+                 ytop,
+                 NA,
+                 NA)
+    color_mat <- rbind(color_mat,new_row)
+    #-------------------------------------------------------------------------------
+    
+    #-------------------------------------------------------------------------------
+    # should labels be plotted on the color bar
+    if(labels_TF == TRUE){
+      #-------------------------------------------------------------------------------
+      if(is.null(labels_at) == TRUE){
+        labels_at <- pretty(c(1,
+                              length(color_mat$xleft)))
+      }
+      #-------------------------------------------------------------------------------
+      
+      #-------------------------------------------------------------------------------
+      # if user did not enter labels then set them to the break values
+      if(is.null(labels_text) == TRUE){
+        labels_text <- labels_at
+      }
+      #-------------------------------------------------------------------------------
+      
+      
+      
+      #-------------------------------------------------------------------------------
+      # fix zero position
+      if(0 %in% labels_at){
+        labels_at <- labels_at + 1
+      }
+      #-------------------------------------------------------------------------------
+      
+      
+      #-------------------------------------------------------------------------------
+      # draw labels
+      for(j in 1:length(labels_at)){
+        #-------------------------------------------------------------------------------
+        # where is the y coordiante that the current label is being drawn at
+        if(middle == FALSE){
+          x <- color_mat$xleft[labels_at[j]]
+        } else {
+          x <- (color_mat$xleft[labels_at[j]] + color_mat$xright[labels_at[j]])/2
+        }
+        #-------------------------------------------------------------------------------
+        
+        
+        #-------------------------------------------------------------------------------
+        # dont accidentally overshoot label position in middle case. In not middle case
+        # need to add top label (if specified) using the extra row bound above
+        if(middle == TRUE & j > length(colors)){} else {
+          #-------------------------------------------------------------------------------
+          # which side are the labels on
+          if(labels_side == 'right'){
+            lines(x   = c(x, x),
+                  y   = c(ybot, ybot - line_length),
+                  xpd = xpd)
+            
+            text(x      = x,
+                 y      = ybot - line_length, 
+                 pos    = 1,
+                 labels = labels_text[j],
+                 cex    = 1.4,
+                 xpd    = xpd,
+                 srt    = labels_srt)
+          }
+          
+          if(labels_side == 'left'){
+            lines(x   = c(x, x),
+                  y   = c(ytop, ytop + line_length),
+                  xpd = xpd)
+            
+            text(x      = x,
+                 y      = ytop + line_length, 
+                 pos    = 3,
+                 labels = labels_text[j],
+                 cex    = 1.4,
+                 xpd    = xpd,
+                 srt    = labels_srt)
+          }
+          #-------------------------------------------------------------------------------
+        }
+        #-------------------------------------------------------------------------------
+      }
+      #-------------------------------------------------------------------------------
+    }
+    #-------------------------------------------------------------------------------
+    
+    
+    #-------------------------------------------------------------------------------
+    # draw box around the bar or not (by drawing rectangle of empty color)
+    if(bar_box == TRUE){
+      rect(xleft    = xleft,
+           ybottom  = ybot,
+           xright   = xright,
+           ytop     = ytop,
+           col      = NA,
+           border   = bar_box_col)
+    }
+    #-------------------------------------------------------------------------------
+  }
+  #-------------------------------------------------------------------------------
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  # ==============================================================================
+  # CALL FUNCTIONS
+  # ==============================================================================
+  
   #-------------------------------------------------------------------------------
   # what type of bar to draw?
   if(horizontal == FALSE){
     Vertical_Bar()
-  } else {}
+  } else { Horizontal_Bar() }
   #-------------------------------------------------------------------------------
-  
 }
 #-------------------------------------------------------------------------------
