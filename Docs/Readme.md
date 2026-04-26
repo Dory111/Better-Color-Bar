@@ -16,8 +16,6 @@ appear on the color bar. <br/> <br/>
 Defines whether to draw a border around the color bar. <br/> <br/>
 <b><font size = "3">bar_box_col</font></b>: *char*, default *‘black’*.
 Defines what color to draw the bar box in. <br/> <br/>
-<b><font size = "3">colors</font></b>: *vector*, series of colors to
-appear on the color bar. <br/> <br/>
 <b><font size = "3">xleft</font></b>: *numeric*, default to
 *par(‘usr’)\[1\]*. The left hand coordinate of the color bar.
 Coordinates are in plot values and not paper values (0,1).  
@@ -119,13 +117,10 @@ Custom_Color_Bar(colors      = viridis::cividis(n = n_colors),
 ![](Readme_files/figure-gfm/usageMiddle-1.png)<!-- -->
 
 <br/> <br/> <br/> <br/> <font size = "3">This shows how to place labels
-at the middle of colors for categorical variables. These values are
-based on matrix indexing. Therefore, if you set a label to be at a non
-integer value the first digit will be what is represented. For example a
-value of between 2-2.99 will cause that label to appear at the second
-color division. Because this, along with the categorical example above
-is just done with the rect() function you can place as many color bars
-as you want. <br/> <br/>
+at the bottom of colors for numeric values using three bars of
+increasing complexity. Because this, along with the categorical example
+above, is just done with the rect() function you can place as many color
+bars as you want. <br/> <br/>
 
 ``` r
 #-------------------------------------------------------------------------------
