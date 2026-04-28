@@ -22,18 +22,18 @@ Coordinates are in plot values and not paper values (0,1).
 <br/> <b><font size = "3">ybot</font></b>: *numeric*, default to
 *par(‘usr’)\[3\]*. The bottom coordinate of the color bar. Coordinates
 are in plot values and not paper values (0,1). <br/> <br/>
-<b><font size = "3">xright</font></b>: *numeric*, *default to
-par(‘usr’)\[1\]**0.2*. The right hand coordinate of the color bar.
+<b><font size = "3">xright</font></b>: *numeric*, default to
+<i>par(‘usr’)\[1\] \* 0.2</i>. The right hand coordinate of the color
+bar. Coordinates are in plot values and not paper values (0,1). <br/>
+<br/> <b><font size = "3">ytop</font></b>: *numeric*, default to
+<i>par(‘usr’)\[4\] \* 0.8</i>. The top coordinate of the color bar.
 Coordinates are in plot values and not paper values (0,1). <br/> <br/>
-<b><font size = "3">ytop</font></b>: *numeric*, default to
-*par(‘usr’)\[4\]**0.8*. The top coordinate of the color bar. Coordinates
-are in plot values and not paper values (0,1). <br/> <br/>
 <b><font size = "3">labels_TF</font></b>: *boolean*, default *FALSE*.
 Whether labels are to be assigned to the color bar. <br/> <br/>
 <b><font size = "3">line_length</font></b>: *numeric*, default
-*(par(‘usr’)\[4\] - par(‘usr’)\[3\]) * *0.1*. How long the lines for
-labels connecting the color bar to the label are to be drawn. Value a
-plot and not paper (0,1) value. <br/> <br/>
+<i>(par(‘usr’)\[4\] - par(‘usr’)\[3\]) \* 0.1</i>. How long the lines
+for labels connecting the color bar to the label are to be drawn. Value
+a plot and not paper (0,1) value. <br/> <br/>
 <b><font size = "3">labels_at</font></b>: *numeric vector*, default
 *NULL*. Which colors labels are to be drawn at. For example if there are
 10 colors and you wanted a label at the bottom, middle, and top this
