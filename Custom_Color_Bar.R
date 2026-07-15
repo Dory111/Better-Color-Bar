@@ -7,6 +7,7 @@ Custom_Color_Bar <- function(colors,
                              ytop         = par('usr')[4] * 0.8,
                              line_length  = (par('usr')[4] - par('usr')[3]) * 0.1,
                              labels_TF    = F,
+                             labels_cex   = 1.4,
                              labels_at    = NULL,
                              labels_text  = NULL,
                              labels_side  = 'right',
@@ -75,9 +76,11 @@ Custom_Color_Bar <- function(colors,
         if(labels_TF == TRUE){
           lines(x   = c(xleft, xright),
                 y   = c(color_mat$ybottom[j],color_mat$ybottom[j]),
+                col = color_mat$color[j],
                 xpd = xpd)
           lines(x   = c(xleft, xright),
                 y   = c(tail(color_mat$ytop,1),tail(color_mat$ytop,1)),
+                col = tail(color_mat$color,1),
                 xpd = xpd)
         }
       } else {
@@ -169,7 +172,7 @@ Custom_Color_Bar <- function(colors,
                  y      = y, 
                  pos    = 4,
                  labels = labels_text[j],
-                 cex    = 1.4,
+                 cex    = labels_cex,
                  xpd    = xpd,
                  srt    = labels_srt)
           }
@@ -183,7 +186,7 @@ Custom_Color_Bar <- function(colors,
                  y      = y, 
                  pos    = 2,
                  labels = labels_text[j],
-                 cex    = 1.4,
+                 cex    = labels_cex,
                  xpd    = xpd,
                  srt    = labels_srt)
           }
@@ -265,9 +268,11 @@ Custom_Color_Bar <- function(colors,
         if(labels_TF == TRUE){
           lines(x   = c(xleft, xleft),
                 y   = c(color_mat$ybottom[j],color_mat$ytop[j]),
+                col = color_mat$color[j],
                 xpd = xpd)
           lines(x   = c(xright, xright),
                 y   = c(tail(color_mat$ybottom,1),tail(color_mat$ytop,1)),
+                col = tail(color_mat$color,1),
                 xpd = xpd)
         }
       } else {
@@ -359,7 +364,7 @@ Custom_Color_Bar <- function(colors,
                  y      = ybot - line_length, 
                  adj    = c(labels_xjust, labels_yjust),
                  labels = labels_text[j],
-                 cex    = 1.4,
+                 cex    = labels_cex,
                  xpd    = xpd,
                  srt    = labels_srt)
           }
@@ -373,7 +378,7 @@ Custom_Color_Bar <- function(colors,
                  y      = ytop + line_length, 
                  adj    = c(labels_xjust, labels_yjust),
                  labels = labels_text[j],
-                 cex    = 1.4,
+                 cex    = labels_cex,
                  xpd    = xpd,
                  srt    = labels_srt)
           }
